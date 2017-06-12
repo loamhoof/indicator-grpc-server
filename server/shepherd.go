@@ -34,7 +34,7 @@ func (is *indicatorShepherd) Update(ctx context.Context, req *pb.Request) (*pb.R
 	}
 
 	if req.Label != "" {
-		is.setLabel(req.Id, req.Label)
+		is.setLabel(req.Id, req.Label, req.LabelGuide)
 	}
 	if req.Icon != "" {
 		is.setIcon(req.Id, req.Icon)
@@ -51,7 +51,7 @@ func (is *indicatorShepherd) ensureIndicator(id string) error {
 
 	is.logger.Println(id, "newIndicator")
 
-	indicator := gotk3.NewAppIndicator(id, "", appindicator.CategorySystemServices)
+	indicator := gotk3.NewAppIndicator(id, "", appindicator.CategoryOther)
 
 	menu, err := gtk.MenuNew()
 	if err != nil {
@@ -73,13 +73,13 @@ func (is *indicatorShepherd) ensureIndicator(id string) error {
 	return nil
 }
 
-func (is *indicatorShepherd) setLabel(id string, label string) {
+func (is *indicatorShepherd) setLabel(id string, label, labelGuide string) {
 	indicator := is.indicators[id]
 
 	if currLabel, _ := indicator.GetLabel(); label != currLabel {
-		is.logger.Println(id, "setLabel", label)
+		is.logger.Println(id, "setLabel", label, labelGuide)
 
-		indicator.SetLabel(label, "")
+		indicator.SetLabel(label, labelGuide)
 	}
 }
 

@@ -9,9 +9,9 @@ import (
 )
 
 var (
-	port            int
-	id, label, icon string
-	active          bool
+	port                        int
+	id, label, labelGuide, icon string
+	active                      bool
 )
 
 func init() {
@@ -19,6 +19,7 @@ func init() {
 
 	flag.StringVar(&id, "id", "", "Indicator's ID")
 	flag.StringVar(&label, "label", "", "Indicator's label")
+	flag.StringVar(&labelGuide, "label-guide", "", "Indicator's label's guide")
 	flag.StringVar(&icon, "icon", "", "Indicator's icon")
 	flag.BoolVar(&active, "active", true, "Is indicator active?")
 
@@ -33,10 +34,11 @@ func main() {
 	defer c.Close()
 
 	req := &pb.Request{
-		Id:     id,
-		Label:  label,
-		Icon:   icon,
-		Active: active,
+		Id:         id,
+		Label:      label,
+		LabelGuide: labelGuide,
+		Icon:       icon,
+		Active:     active,
 	}
 
 	if _, err := c.Update(req); err != nil {

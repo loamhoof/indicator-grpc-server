@@ -9,8 +9,9 @@ service Shepherd {
 message Request {
     string id = 1;
     string label = 2;
-    string icon = 3;
-    bool active = 4;
+    string label_guide = 3;
+    string icon = 4;
+    bool active = 5;
 }
 
 message Response {
